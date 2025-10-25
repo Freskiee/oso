@@ -3,13 +3,24 @@ import './style.css'
 const bearImage = document.getElementById('bearImage');
 const bearSound = document.getElementById('bearSound');
 const bellyButton = document.getElementById('bellyButton');
+let isPlaying = false;
 
 function playSound() {
+  if (isPlaying) {
+    return;
+  }
+  
+  isPlaying = true;
   bearSound.currentTime = 0;
   bearSound.play().catch(err => {
     console.log('Audio playback failed:', err);
+    isPlaying = false;
   });
 }
+
+bearSound.addEventListener('ended', () => {
+  isPlaying = false;
+});
 
 function animateBear() {
   bearImage.classList.add('bounce');
